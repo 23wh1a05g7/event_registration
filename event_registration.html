@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Event Registration Form</title>
+<style>
+body {
+font-family: Arial, sans-serif;
+max-width: 500px;
+margin: 2rem auto;
+padding: 1rem;
+background: #f7f7f7;
+border-radius: 8px;
+}
+h2 {
+text-align: center;
+}
+form {
+display: flex;
+flex-direction: column;
+}
+label {
+margin: 0.5rem 0 0.2rem;
+}
+input, select, textarea {
+padding: 0.5rem;
+font-size: 1rem;
+border: 1px solid #ccc;
+border-radius: 4px;
+}
+button {
+margin-top: 1rem;
+padding: 0.7rem;
+background-color: #007bff;
+color: white;
+border: none;
+border-radius: 4px;
+cursor: pointer;
+font-size: 1rem;
+}
+button:hover {
+background-color: #0056b3;
+}
+.error {
+color: red;
+font-size: 0.9rem;
+}
+</style>
+</head>
+<body>
+<h2>Event Registration Form</h2>
+<form id="registrationForm" onsubmit="return validateForm()">
+<label for="fullName">Full Name *</label>
+<input type="text" id="fullName" name="fullName" required />
+
+<label for="email">Email Address *</label>
+<input type="email" id="email" name="email" required />
+
+<label for="phone">Phone Number *</label>
+<input type="tel" id="phone" name="phone" pattern="[0-9]{10}" placeholder="10-digit number" required />
+
+<label for="event">Select Event *</label>
+<select id="event" name="event" required>
+<option value="">-- Please Choose an Event --</option>
+<option value="conference">Annual Conference</option>
+<option value="workshop">Workshop</option>
+<option value="webinar">Webinar</option>
+</select>
+
+<label for="comments">Additional Comments</label>
+<textarea id="comments" name="comments" rows="4"></textarea>
+
+<button type="submit">Register</button>
+<p id="errorMsg" class="error"></p>
+</form>
+
+<script>
+function validateForm() {
+const fullName = document.getElementById('fullName').value.trim();
+const email = document.getElementById('email').value.trim();
+const phone = document.getElementById('phone').value.trim();
+const eventSelect = document.getElementById('event').value;
+const errorMsg = document.getElementById('errorMsg');
+
+errorMsg.textContent = '';
+
+if (fullName.length < 3) {
+errorMsg.textContent = 'Please enter your full name (at least 3 characters).';
+return false;
+}
+
+const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+if (!emailRegex.test(email)) {
+errorMsg.textContent = 'Please enter a valid email address.';
+return false;
+}
+
+const phoneRegex = /^[0-9]{10}$/;
+if (!phoneRegex.test(phone)) {
+errorMsg.textContent = 'Please enter a valid 10-digit phone number.';
+return false;
+}
+
+if (eventSelect === '') {
+errorMsg.textContent = 'Please select an event to register for.';
+return false;
+}
+
+alert('Registration successful! Thank you for registering.');
+// Here you can add code to actually submit the form or send data to a server.
+
+return true;  // Allow form submission
+}
+</script>
+</body>
+</html>
